@@ -16,21 +16,9 @@ class CreateBookingsTable extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->dateTime('starting_at');
-            $table->integer('minutes');
-            $table->boolean('private');
+            $table->integer('minutes')->default(60);
+            $table->boolean('private')->default(false);
             $table->timestamps();
-        });
-
-        Schema::create('booking_room', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('room_id');
-            $table->unsignedBigInteger('booking_id');
-            $table->timestamps();
-
-            $table->unique(['room_id', 'booking_id']);
-
-            $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
-            $table->foreign('booking_id')->references('id')->on('bookings')->onDelete('cascade');
         });
     }
 
@@ -41,7 +29,6 @@ class CreateBookingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('room_booking');
         Schema::dropIfExists('bookings');
     }
 }
