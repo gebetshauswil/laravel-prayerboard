@@ -2,50 +2,54 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\RoomResource;
+use App\Http\Requests\Room\StoreRequest;
+use App\Http\Requests\Room\UpdateRequest;
 use App\Room;
 
-// TODO MR: look at this https://blog.pusher.com/build-rest-api-laravel-api-resources/
-// TODO MR: handle errors and send them back correctly
 class RoomController extends Controller
 {
     public function index()
     {
-        return RoomResource::collection(Room::all());
+        $rooms = Room::all();
+
+        return view('rooms.index', compact('rooms'));
+    }
+
+    public function create()
+    {
+        return view('rooms.create');
+    }
+
+    public function store(StoreRequest $request)
+    {
+        $attributes = $request->validated();
+        Room::create($attributes);
+
+        return redirect(route('rooms.index'));
     }
 
     public function show(Room $room)
     {
-        return new RoomResource($room);
+        return view('rooms.show', compact('room'));
     }
 
-    public function store()
+    public function edit(Room $room)
     {
-        $attributes = request()->validate([
-            'name' => 'required',
-            'capacity' => 'required|numeric',
-        ]);
-
-        $room = Room::create($attributes);
-
-        return new RoomResource($room);
+        return view('rooms.edit', compact('room'));
     }
 
-    public function update(Room $room)
+    public function update(UpdateRequest $request, Room $room)
     {
-        $attributes = request()->validate([
-            'name' => 'required',
-            'capacity' => 'required|numeric',
-        ]);
-
+        $attributes = $request->validated();
         $room->update($attributes);
 
-        return new RoomResource($room);
+        return redirect(route('rooms.show', compact('room')));
     }
 
     public function destroy(Room $room)
     {
         $room->delete();
-        return response()->json(null, 204);
+
+        return redirect(route('rooms.index'));
     }
 }

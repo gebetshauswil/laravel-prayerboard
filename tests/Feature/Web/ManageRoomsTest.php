@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Web;
 
 use App\Room;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -58,25 +58,11 @@ class ManageRoomsTest extends TestCase
     }
 
     /** @test */
-    public function a_rooms_capacity_should_be_numeric()
+    public function a_rooms_capacity_should_be_integer()
     {
         $attributes = factory(Room::class)->raw(['capacity' => $this->faker->word]);
 
         $this->post(route('rooms.store'), $attributes)->assertSessionHasErrors('capacity');
-    }
-
-    /** @test */
-    function a_user_can_delete_a_room()
-    {
-        $this->withoutExceptionHandling();
-
-        /** @var Room $room */
-        $room = factory(Room::class)->create();
-
-        $this->delete(route('rooms.destroy', compact('room')))
-            ->assertRedirect(route('rooms.index'));
-
-        $this->assertDatabaseMissing('rooms', $room->only('id'));
     }
 
     /** @test */
@@ -93,5 +79,20 @@ class ManageRoomsTest extends TestCase
             ->assertRedirect(route('rooms.show', compact('room')));
 
         $this->assertDatabaseHas('rooms', $attributes);
+    }
+
+
+    /** @test */
+    function a_user_can_delete_a_room()
+    {
+        $this->withoutExceptionHandling();
+
+        /** @var Room $room */
+        $room = factory(Room::class)->create();
+
+        $this->delete(route('rooms.destroy', compact('room')))
+            ->assertRedirect(route('rooms.index'));
+
+        $this->assertDatabaseMissing('rooms', $room->only('id'));
     }
 }
