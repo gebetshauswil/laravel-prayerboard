@@ -11,6 +11,8 @@ class ManageRoomsTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
+    protected $headers = ['Accept' => 'application/json'];
+
     /** @test */
     public function the_api_can_list_the_rooms()
     {
@@ -18,8 +20,9 @@ class ManageRoomsTest extends TestCase
 
         factory(Room::class, 5)->create();
 
-        $this->get(route('api.rooms.index'))
+        $this->get(route('api.rooms.index'), $this->headers)
             ->assertJsonCount(5, 'data')
+            ->assertDontSee('bookings')
             ->assertOk();
     }
 
@@ -31,9 +34,10 @@ class ManageRoomsTest extends TestCase
         /** @var Room $room */
         $room = factory(Room::class)->create();
 
-        $this->get(route('api.rooms.show', compact('room')))
+        $this->get(route('api.rooms.show', compact('room'), $this->headers))
             ->assertSee($room->name)
             ->assertSee($room->capacity)
+            ->assertSee('bookings')
             ->assertOk();
     }
 
@@ -56,7 +60,7 @@ class ManageRoomsTest extends TestCase
     {
         $attributes = factory(Room::class)->raw(['name' => '']);
 
-        $this->post(route('api.rooms.store'), $attributes)
+        $this->post(route('api.rooms.store'), $attributes, $this->headers)
             ->assertSee('The name field is required.')
             ->assertStatus(422);
 
@@ -68,7 +72,7 @@ class ManageRoomsTest extends TestCase
     {
         $attributes = factory(Room::class)->raw(['capacity' => '']);
 
-        $this->post(route('api.rooms.store'), $attributes)
+        $this->post(route('api.rooms.store'), $attributes, $this->headers)
             ->assertSee('The capacity field is required.')
             ->assertStatus(422);
 
@@ -76,7 +80,7 @@ class ManageRoomsTest extends TestCase
 
         $attributes = factory(Room::class)->raw(['capacity' => $this->faker->word]);
 
-        $this->post(route('api.rooms.store'), $attributes)
+        $this->post(route('api.rooms.store'), $attributes, $this->headers)
             ->assertSee('The capacity must be an integer.')
             ->assertStatus(422);
 
@@ -103,20 +107,18 @@ class ManageRoomsTest extends TestCase
     /** @test */
     function the_api_can_update_the_name_of_a_room()
     {
-        $this->withoutExceptionHandling();
-
         $initial_attributes = ['name' => 'Initial', 'capacity' => '1'];
 
         /** @var Room $room */
         $room = factory(Room::class)->create($initial_attributes);
 
-        $this->patch(route('api.rooms.update', compact('room')), $attributes = ['name' => ''])
-            ->assertSee('The name field is required.')
+        $this->patch(route('api.rooms.update', compact('room')), $attributes = ['name' => ''], $this->headers)
+            ->assertSee('The name field is required')
             ->assertStatus(422);
 
         $this->assertDatabaseHas('rooms', $initial_attributes);
 
-        $this->patch(route('api.rooms.update', compact('room')), $attributes = ['name' => 'Changed'])
+        $this->patch(route('api.rooms.update', compact('room')), $attributes = ['name' => 'Changed'], $this->headers)
             ->assertSee($attributes['name'])
             ->assertSee($initial_attributes['capacity'])
             ->assertOk();
@@ -127,26 +129,24 @@ class ManageRoomsTest extends TestCase
     /** @test */
     function the_api_can_update_the_capacity_of_a_room()
     {
-        $this->withoutExceptionHandling();
-
         $initial_attributes = ['name' => 'Initial', 'capacity' => '1'];
 
         /** @var Room $room */
         $room = factory(Room::class)->create($initial_attributes);
 
-        $this->patch(route('api.rooms.update', compact('room')), $attributes = ['capacity' => ''])
+        $this->patch(route('api.rooms.update', compact('room')), $attributes = ['capacity' => ''], $this->headers)
             ->assertSee('The capacity field is required.')
             ->assertStatus(422);
 
         $this->assertDatabaseHas('rooms', $initial_attributes);
 
-        $this->patch(route('api.rooms.update', compact('room')), $attributes = ['capacity' => $this->faker->word])
+        $this->patch(route('api.rooms.update', compact('room')), $attributes = ['capacity' => $this->faker->word], $this->headers)
             ->assertSee('The capacity must be an integer.')
             ->assertStatus(422);
 
         $this->assertDatabaseHas('rooms', $initial_attributes);
 
-        $this->patch(route('api.rooms.update', compact('room')), $attributes = ['capacity' => '2'])
+        $this->patch(route('api.rooms.update', compact('room')), $attributes = ['capacity' => '2'], $this->headers)
             ->assertSee($attributes['capacity'])
             ->assertSee($initial_attributes['name'])
             ->assertOk();
@@ -162,7 +162,7 @@ class ManageRoomsTest extends TestCase
         /** @var Room $room */
         $room = factory(Room::class)->create();
 
-        $this->delete(route('api.rooms.destroy', compact('room')))
+        $this->delete(route('api.rooms.destroy', compact('room')), $this->headers)
             ->assertStatus(204);
 
         $this->assertDatabaseMissing('rooms', $room->only('id'));
