@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Room;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RoomResource extends JsonResource
@@ -14,6 +15,7 @@ class RoomResource extends JsonResource
      */
     public function toArray($request)
     {
+        /** @var Room $this */
         return [
             'id' => $this->id,
             'name' => $this->name,

@@ -16,6 +16,4 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::name('api.')->group(function () {
-    Route::apiResource('rooms', 'Api\RoomController');
-});
+Route::apiResource('rooms', 'Api\RoomController');

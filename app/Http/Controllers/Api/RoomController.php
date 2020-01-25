@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Room\StoreRequest;
-use App\Http\Requests\Api\Room\UpdateRequest;
+use App\Http\Requests\Room\StoreRequest;
+use App\Http\Requests\Room\UpdateRequest;
 use App\Http\Resources\RoomResource;
 use App\Room;
 
