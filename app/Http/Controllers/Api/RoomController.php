@@ -17,7 +17,7 @@ class RoomController extends Controller
 
     public function show(Room $room)
     {
-        return new RoomResource($room);
+        return new RoomResource($room->loadMissing('bookings'));
     }
 
     public function store(StoreRequest $request)

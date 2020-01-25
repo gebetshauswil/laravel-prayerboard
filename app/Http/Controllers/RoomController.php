@@ -30,6 +30,8 @@ class RoomController extends Controller
 
     public function show(Room $room)
     {
+        $room->loadMissing('bookings');
+
         return view('rooms.show', compact('room'));
     }
 

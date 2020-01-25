@@ -2,10 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Room;
+use App\Booking;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RoomResource extends JsonResource
+class BookingResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,14 +15,12 @@ class RoomResource extends JsonResource
      */
     public function toArray($request)
     {
-        /** @var Room $this */
+        /** @var Booking $this */
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'capacity' => (int)$this->capacity,
             'created_at' => (string)$this->created_at,
             'updated_at' => (string)$this->updated_at,
-            'bookings' => BookingResource::collection($this->whenLoaded('bookings'))
+            'rooms' => RoomResource::collection($this->whenLoaded('rooms'))
         ];
     }
 }
