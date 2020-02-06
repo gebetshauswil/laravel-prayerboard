@@ -86,20 +86,23 @@ class ManageRoomsTest extends TestCase
     }
 
     /** @test */
-    function the_api_can_update_all_properties_of_a_room()
+    public function the_api_can_not_create_a_room_without_a_relation_to_an_organisation()
     {
-        $this->withoutExceptionHandling();
+        $attributes = factory(Room::class)->raw(['organisation_id' => '']);
 
-        $initial_attributes = ['name' => 'Initial', 'capacity' => '1'];
+        $this->postJson(route('api.rooms.store'), $attributes)
+            ->assertJsonValidationErrors('organisation_id')
+            ->assertStatus(422);
 
-        /** @var Room $room */
-        $room = factory(Room::class)->create($initial_attributes);
+        $this->assertDatabaseMissing('rooms', $attributes);
 
-        $this->patch(route('api.rooms.update', compact('room')), $attributes = ['name' => 'Changed', 'capacity' => '2'])
-            ->assertSee($attributes['name'])
-            ->assertSee($attributes['capacity']);
+        $attributes = factory(Room::class)->raw(['organisation_id' => 1]);
 
-        $this->assertDatabaseHas('rooms', $attributes);
+        $this->postJson(route('api.rooms.store'), $attributes)
+            ->assertJsonValidationErrors('organisation_id')
+            ->assertStatus(422);
+
+        $this->assertDatabaseMissing('rooms', $attributes);
     }
 
     /** @test */
@@ -150,6 +153,25 @@ class ManageRoomsTest extends TestCase
             ->assertOk();
 
         $this->assertDatabaseHas('rooms', array_merge($initial_attributes, $attributes));
+    }
+
+    /** @test */
+    function the_api_can_not_update_the_relationship_to_a_organisation()
+    {
+
+        /** @var Room $room */
+        $room = factory(Room::class)->create();
+        $initial_attributes = [
+            'name' => $room->name,
+            'capacity' => $room->capacity,
+            'organisation_id' => $room->organisation_id
+        ];
+
+        $this->patchJson(route('api.rooms.update', compact('room')), $attributes = ['organisation_id' => '3'])
+            ->assertJsonMissingValidationErrors('organisation_id')
+            ->assertOk();
+
+        $this->assertDatabaseHas('rooms', $initial_attributes);
     }
 
     /** @test */

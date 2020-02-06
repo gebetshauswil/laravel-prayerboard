@@ -15,10 +15,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::group(['prefix' => 'dashboard'], function () {
+    Auth::routes(['prefix' => 'admin']);
+    Route::get(null, 'DashboardController@index')->name('dashboard');
+    Route::resource('organisations', 'OrganisationController');
+    Route::resource('rooms', 'RoomController');
+    Route::resource('bookings', 'BookingController');
+});
 
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::resource('rooms', 'RoomController');
-Route::resource('bookings', 'BookingController');

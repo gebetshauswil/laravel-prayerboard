@@ -57,12 +57,21 @@ class ManageRoomsTest extends TestCase
         $this->post(route('rooms.store'), $attributes)->assertSessionHasErrors('capacity');
     }
 
+
     /** @test */
     public function a_rooms_capacity_should_be_integer()
     {
         $attributes = factory(Room::class)->raw(['capacity' => $this->faker->word]);
 
         $this->post(route('rooms.store'), $attributes)->assertSessionHasErrors('capacity');
+    }
+
+    /** @test */
+    public function a_room_requires_needs_a_relation_to_an_organisation()
+    {
+        $attributes = factory(Room::class)->raw(['organisation_id' => '']);
+
+        $this->post(route('rooms.store'), $attributes)->assertSessionHasErrors('organisation_id');
     }
 
     /** @test */

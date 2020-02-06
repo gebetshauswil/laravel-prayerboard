@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container">
+        <a href="{{route('rooms.show',compact('room'))}}">zurück zum Raum</a><br><br>
         <form action="{{route('rooms.update', compact('room'))}}" method="post">
             @csrf
             @method('patch')

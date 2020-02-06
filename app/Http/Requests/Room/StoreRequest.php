@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\Room;
 
+use App\Organisation;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Exists;
 
 class StoreRequest extends FormRequest
 {
@@ -24,8 +27,9 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'capacity' => 'required|integer'
+            'name' => ['required'],
+            'capacity' => ['required', 'integer'],
+            'organisation_id' => ['required', Rule::exists(Organisation::class, 'id')]
         ];
     }
 }

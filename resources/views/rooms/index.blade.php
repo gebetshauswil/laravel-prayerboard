@@ -12,6 +12,7 @@
                         <li>No Rooms yet</li>
                     @endforelse
                 </ul>
+                <a href="{{route('rooms.create')}}">Raum erstellen</a>
             </div>
         </div>
     </div>

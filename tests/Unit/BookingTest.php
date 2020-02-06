@@ -57,20 +57,11 @@ class BookingTest extends TestCase
     }
 
     /** @test */
-    public function it_can_have_attached_rooms()
+    public function it_belongs_to_a_room()
     {
         /** @var Booking $booking */
         $booking = factory(Booking::class)->create();
 
-        /** @var Room $room */
-        $room = factory(Room::class)->create();
-
-        $booking->rooms()->attach($room->id);
-
-        $this->assertNotNull($booking->rooms);
-        $this->assertInstanceOf(Collection::class, $booking->rooms);
-
-        $this->assertCount(1, $booking->rooms);
-        $this->assertSame($room->id, $booking->rooms->find($room->id)->id);
+        $this->assertInstanceOf(Room::class, $booking->room);
     }
 }

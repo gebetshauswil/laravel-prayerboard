@@ -18,7 +18,10 @@ class CreateBookingsTable extends Migration
             $table->dateTime('starting_at');
             $table->integer('minutes')->default(60);
             $table->boolean('private')->default(false);
+            $table->unsignedBigInteger('room_id');
             $table->timestamps();
+
+            $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

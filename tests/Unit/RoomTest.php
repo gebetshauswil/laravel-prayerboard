@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Booking;
+use App\Organisation;
 use App\Room;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -48,20 +49,11 @@ class RoomTest extends TestCase
     }
 
     /** @test */
-    public function it_can_have_attached_bookings()
+    public function it_belongs_to_an_organisation()
     {
         /** @var Room $room */
         $room = factory(Room::class)->create();
 
-        /** @var Booking $booking */
-        $booking = factory(Booking::class)->create();
-
-        $room->bookings()->attach($booking->id);
-
-        $this->assertNotNull($room->bookings);
-        $this->assertInstanceOf(Collection::class, $room->bookings);
-
-        $this->assertCount(1, $room->bookings);
-        $this->assertSame($room->id, $room->bookings->find($booking->id)->id);
+        $this->assertInstanceOf(Organisation::class, $room->organisation);
     }
 }
