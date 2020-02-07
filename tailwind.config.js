@@ -1,7 +1,14 @@
 module.exports = {
-  theme: {
-    extend: {},
-  },
-  variants: {},
-  plugins: [],
-}
+    theme: {
+        extend: {
+            fontFamily: {
+                'nunito': ['Nunito', 'sans-serif'],
+            },
+            fontSize: {
+                '7xl': '5rem',
+            }
+        },
+    },
+    variants: {},
+    plugins: [],
+};
