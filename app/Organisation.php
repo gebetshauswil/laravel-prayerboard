@@ -30,4 +30,9 @@ class Organisation extends Model
     {
         return $this->hasMany(Room::class);
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }
