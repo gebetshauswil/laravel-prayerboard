@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
  * App\Booking
  *
  * @property int $id
- * @property int $room_id
  * @property string $starting_at
  * @property int $minutes
  * @property int $private
+ * @property int $room_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Room $room

@@ -29,6 +29,14 @@ class OrganisationTest extends TestCase
     }
 
     /** @test */
+    public function it_has_a_slug()
+    {
+        /** @var Organisation $organisation */
+        $organisation = factory(Organisation::class)->create();
+        $this->assertNotNull($organisation->slug);
+    }
+
+    /** @test */
     public function it_has_timestamps()
     {
         /** @var Organisation $organisation */

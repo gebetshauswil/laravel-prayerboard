@@ -14,69 +14,54 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&display=swap"
+        rel="stylesheet">
 </head>
-<body>
-<div id="app">
+<body class="bg-white leading-normal tracking-normal text-gray-900 font-thin font-nunito">
+<div class="h-screen relative flex flex-col justify-between items-center">
+    <header class="px-6 py-5 w-full flex justify-between flex-row">
+        <div>
+            <a href="/"
+               class="text-sm lg:text-base tracking-wide uppercase font-semibold px-4 text-gray-600 hover:text-gray-900">Home</a>
+        </div>
+        <div>
+            @if (Route::has('login'))
+                @auth
+                    <a class="text-sm lg:text-base tracking-wide uppercase font-semibold px-4 text-gray-600 hover:text-gray-900"
+                       href="{{ route('dashboard') }}">Dashboard</a>
+                @else
+                    <a class="text-sm lg:text-base tracking-wide uppercase font-semibold px-4 text-gray-600 hover:text-gray-900"
+                       href="{{ route('login') }}">Login</a>
 
-    @if(false)
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                          style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    @endif
-    <main>
-        @yield('content')
-    </main>
+                    @if (Route::has('register'))
+                        <a class="text-sm lg:text-base tracking-wide uppercase font-semibold px-4 text-gray-600 hover:text-gray-900"
+                           href="{{ route('register') }}">Register</a>
+                    @endif
+                @endauth
+            @endif
+        </div>
+    </header>
+    <div class="flex w-full max-w-6xl">
+        <aside class="w-1/4">
+            <nav>
+                <ul>
+                    <li><a href="{{route('organisations.index')}}">Organisations</a></li>
+                    <li><a href="{{route('rooms.index')}}">Rooms</a></li>
+                    <li><a href="{{route('bookings.index')}}">Bookings</a></li>
+                    <li><a href="{{route('users.index')}}">Users</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="w-3/4">
+            @yield('content')
+        </main>
+    </div>
+    <footer class="px-6 py-5 flex">
+        <a class="text-sm lg:text-base tracking-wide uppercase font-semibold px-4 text-gray-600 hover:text-gray-900"
+           href="https://gebetshauswil.ch">&copy; {{date('Y')}} by gebetshaus wil</a>
+    </footer>
 </div>
 </body>
 </html>
