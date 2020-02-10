@@ -7,23 +7,24 @@
             <div class="mb-4">
                 <label for="email" class="block text-gray-700 text-sm font-bold mb-2">{{ __('E-Mail Address') }}</label>
                 <input id="email" type="email"
-                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('email') mb-3 border-red-500 @enderror"
+                       class="w-full form-input @error('email') mb-3 border-red-500 @enderror"
                        name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
                        placeholder="{{ __('E-Mail Address') }}">
                 @error('email')<p class="text-red-500 text-xs italic" role="alert">{{ $message }}</p>@enderror
             </div>
-            <div class="mb-6">
+            <div class="mb-4">
                 <label for="password" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Password') }}</label>
                 <input id="password" type="password"
-                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('password') mb-3 border-red-500 @enderror"
+                       class="w-full form-input @error('password') mb-3 border-red-500 @enderror"
                        name="password" required autocomplete="current-password" placeholder="********">
                 @error('password')<p class="text-red-500 text-xs italic" role="alert">{{ $message }}</p>@enderror
             </div>
-            {{--TODO MR: style--}}
-            {{--<div>--}}
-            {{--    <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>--}}
-            {{--    <label for="remember">{{ __('Remember Me') }}</label>--}}
-            {{--</div>--}}
+            <div class="flex mb-6">
+                <label class="flex items-center" for="remember">
+                    <input type="checkbox" name="remember" id="remember" class="form-checkbox" {{ old('remember') ? 'checked' : '' }}>
+                    <span class="ml-2 cursor-pointer select-none">{{ __('Remember Me') }}</span>
+                </label>
+            </div>
             <div class="flex items-center justify-between">
                 <button
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

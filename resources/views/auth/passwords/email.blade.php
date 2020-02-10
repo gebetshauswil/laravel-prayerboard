@@ -12,7 +12,7 @@
         <div class="mb-6">
             <label for="email" class="block text-gray-700 text-sm font-bold mb-2">{{ __('E-Mail Address') }}</label>
             <input id="email" type="email"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('email') mb-3 border-red-500 @enderror"
+                   class="w-full form-input @error('email') mb-3 border-red-500 @enderror"
                    name="email" value="{{ old('email') }}" required autocomplete="email" autofocus
                    placeholder="{{ __('E-Mail Address') }}">
             @error('email')<p class="text-red-500 text-xs italic" role="alert">{{ $message }}</p>@enderror

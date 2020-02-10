@@ -8,7 +8,7 @@
         <div class="mb-4">
             <label for="email" class="block text-gray-700 text-sm font-bold mb-2">{{ __('E-Mail Address') }}</label>
             <input id="email" type="email"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('email') mb-3 border-red-500 @enderror"
+                   class="w-full form-input @error('email') mb-3 border-red-500 @enderror"
                    name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus
                    placeholder="{{ __('E-Mail Address') }}">
             @error('email')<p class="text-red-500 text-xs italic" role="alert">{{ $message }}</p>@enderror
@@ -16,7 +16,7 @@
         <div class="mb-4">
             <label for="password" class="block text-gray-700 text-sm font-bold mb-2">{{ __('Password') }}</label>
             <input id="password" type="password"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline @error('password') mb-3 border-red-500 @enderror"
+                   class="w-full form-input @error('password') mb-3 border-red-500 @enderror"
                    name="password" required autocomplete="new-password" placeholder="********">
             @error('password')<p class="text-red-500 text-xs italic" role="alert">{{ $message }}</p>@enderror
         </div>
@@ -24,7 +24,7 @@
             <label for="password-confirm"
                    class="block text-gray-700 text-sm font-bold mb-2">{{ __('Confirm Password') }}</label>
             <input id="password-confirm" type="password"
-                   class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                   class="w-full form-input"
                    name="password_confirmation" required autocomplete="new-password" placeholder="********">
         </div>
         <div class="flex items-center justify-between">
