@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Organisation;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -43,5 +44,32 @@ class OrganisationTest extends TestCase
         $organisation = factory(Organisation::class)->create();
         $this->assertNotNull($organisation->created_at);
         $this->assertNotNull($organisation->updated_at);
+    }
+
+    /** @test */
+    public function it_can_have_assigned_rooms()
+    {
+        /** @var Organisation $organisation */
+        $organisation = factory(Organisation::class)->create();
+
+        $this->assertInstanceOf(Collection::class, $organisation->rooms);
+    }
+
+    /** @test */
+    public function it_can_have_assigned_users()
+    {
+        /** @var Organisation $organisation */
+        $organisation = factory(Organisation::class)->create();
+
+        $this->assertInstanceOf(Collection::class, $organisation->users);
+    }
+
+    /** @test */
+    public function it_builds_routes_by_slug()
+    {
+        /** @var Organisation $organisation */
+        $organisation = factory(Organisation::class)->create();
+
+        $this->assertSame('slug', $organisation->getRouteKeyName());
     }
 }

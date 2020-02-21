@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Enums\UserType;
+use App\Http\Requests\Organisation\StoreRequest;
 use App\Organisation;
-use App\Role;
 use Illuminate\Http\Request;
 
 class OrganisationController extends Controller
@@ -12,45 +12,38 @@ class OrganisationController extends Controller
     public function index()
     {
         if (auth()->user()->is_superadmin) {
-            $organisations = Organisation::all();
+            $organisations = Organisation::orderBy('name', 'asc')->get();
             return view('organisations.index', compact('organisations'));
         }
 
-        $organisations = auth()->user()->manageableOrganisations;
+        $organisations = auth()->user()->manageableOrganisations()->orderBy('name', 'asc')->get();
 
         return view('organisations.index', compact('organisations'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('organisations.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $attributes = $request->validated();
+        $organisation = Organisation::create($attributes);
+
+        $user = auth()->user();
+
+        if(!$user->is_superadmin) {
+            $organisation->users()->save($user, ['type' => UserType::Administrator]);
+        }
+
+        return redirect(route('organisations.index'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param \App\Organisation $organisation
-     * @return \Illuminate\Http\Response
-     */
     public function show(Organisation $organisation)
     {
-        //
+        return view('organisations.show', compact('organisation'));
+
     }
 
     /**

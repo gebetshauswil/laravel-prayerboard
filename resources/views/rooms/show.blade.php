@@ -4,7 +4,6 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <a href="{{route('rooms.index')}}">zur Raumliste</a><br><br>
                 <h1>{{$room->name}}</h1>
                 <p>Capacity: {{$room->capacity}}</p>
                 <ul>
@@ -27,4 +26,16 @@
             </div>
         </div>
     </div>
+
+    <a href="{{route('rooms.index')}}" class="display-block mb-2">zur Raumliste</a>
+    <h1 class="text-4xl mb-6">Rooms</h1>
+
+    <ul>
+        @forelse($rooms as $room)
+            <li><a href="{{route('rooms.show',compact('room'))}}">{{$room->name}}</a></li>
+        @empty
+            <li>No Rooms yet</li>
+        @endforelse
+    </ul>
+    <a href="{{route('rooms.create')}}">Room erstellen</a>
 @endsection

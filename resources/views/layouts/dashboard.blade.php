@@ -19,9 +19,9 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&display=swap"
         rel="stylesheet">
 </head>
-<body class="bg-white leading-normal tracking-normal text-gray-900 font-thin font-nunito">
-<div class="h-screen relative flex flex-col justify-between items-center">
-    <header class="px-6 py-5 w-full flex justify-between flex-row">
+<body class="bg-gray-100 leading-normal tracking-normal text-gray-900 font-thin font-nunito">
+<div class="h-screen relative flex flex-col justify-start items-center">
+    <header class="px-6 py-5 w-full flex justify-between flex-row mb-40">
         <div>
             <a href="/"
                class="text-sm lg:text-base tracking-wide uppercase font-semibold px-4 text-gray-600 hover:text-gray-900">Home</a>
@@ -47,18 +47,18 @@
         <aside class="w-1/4">
             <nav>
                 <ul>
-                    <li><a href="{{route('organisations.index')}}">Organisations</a></li>
-                    <li><a href="{{route('rooms.index')}}">Rooms</a></li>
-                    <li><a href="{{route('bookings.index')}}">Bookings</a></li>
-                    <li><a href="{{route('users.index')}}">Users</a></li>
+                    <li><a href="{{route('organisations.index')}}" class="block py-1 hover:text-blue-800">Organisations</a></li>
+                    <li><a href="{{route('rooms.index')}}" class="block py-1 hover:text-blue-800">Rooms</a></li>
+                    <li><a href="{{route('bookings.index')}}" class="block py-1 hover:text-blue-800">Bookings</a></li>
+                    <li><a href="{{route('users.index')}}" class="block py-1 hover:text-blue-800">Users</a></li>
                 </ul>
             </nav>
         </aside>
-        <main class="w-3/4">
+        <main class="w-3/4 bg-white shadow-md rounded px-8 pt-6 pb-8">
             @yield('content')
         </main>
     </div>
-    <footer class="px-6 py-5 flex">
+    <footer class="px-6 py-5 flex mt-auto">
         <a class="text-sm lg:text-base tracking-wide uppercase font-semibold px-4 text-gray-600 hover:text-gray-900"
            href="https://gebetshauswil.ch">&copy; {{date('Y')}} by gebetshaus wil</a>
     </footer>

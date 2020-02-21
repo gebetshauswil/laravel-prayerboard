@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Enums\UserType;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -19,6 +18,8 @@ use Illuminate\Notifications\Notifiable;
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Organisation[] $manageableOrganisations
+ * @property-read int|null $manageable_organisations_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Organisation[] $organisations
@@ -73,7 +74,6 @@ class User extends Authenticatable
 
     public function manageableOrganisations()
     {
-        return $this->organisations()->where('type', UserType::Administrator);
+        return $this->belongsToMany(Organisation::class)->wherePivot('type', UserType::Administrator);
     }
-
 }

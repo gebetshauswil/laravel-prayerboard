@@ -19,7 +19,7 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&display=swap"
         rel="stylesheet">
 </head>
-<body class="bg-white leading-normal tracking-normal text-gray-900 font-thin font-nunito">
+<body class="bg-gray-100 leading-normal tracking-normal text-gray-900 font-thin font-nunito">
 <div class="h-screen relative flex flex-col justify-between items-center">
     <header class="px-6 py-5 w-full flex justify-between flex-row">
         <div>

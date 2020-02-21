@@ -18,6 +18,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property-read int|null $rooms_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $users
  * @property-read int|null $users_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Organisation manageableBy(\App\User $user)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Organisation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Organisation newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Organisation query()
@@ -55,5 +56,4 @@ class Organisation extends Model
             ->saveSlugsTo('slug')
             ->doNotGenerateSlugsOnUpdate();
     }
-
 }

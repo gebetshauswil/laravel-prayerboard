@@ -44,7 +44,7 @@ class ManageOrganisationTest extends TestCase
     }
 
     /** @test */
-    public function an_admin_can_list_all_his_manageable_organisations()
+    public function an_admin_can_only_list_his_manageable_organisations()
     {
         $user = factory('App\User')->create();
         $this->actingAs($user);

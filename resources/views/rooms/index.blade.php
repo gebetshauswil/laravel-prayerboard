@@ -1,19 +1,14 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <h1>Rooms</h1>
-                <ul>
-                    @forelse($rooms as $room)
-                        <li><a href="{{route('rooms.show',compact('room'))}}">{{$room->name}}</a></li>
-                    @empty
-                        <li>No Rooms yet</li>
-                    @endforelse
-                </ul>
-                <a href="{{route('rooms.create')}}">Raum erstellen</a>
-            </div>
-        </div>
-    </div>
+    <h1 class="text-4xl mb-6">Rooms</h1>
+
+    <ul>
+        @forelse($rooms as $room)
+            <li><a href="{{route('rooms.show',compact('room'))}}">{{$room->name}}</a></li>
+        @empty
+            <li>No Rooms yet</li>
+        @endforelse
+    </ul>
+    <a href="{{route('rooms.create')}}">Room erstellen</a>
 @endsection
