@@ -43,18 +43,11 @@ class OrganisationController extends Controller
     public function show(Organisation $organisation)
     {
         return view('organisations.show', compact('organisation'));
-
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Organisation $organisation
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Organisation $organisation)
     {
-        //
+        return view('organisations.edit', compact('organisation'));
     }
 
     /**

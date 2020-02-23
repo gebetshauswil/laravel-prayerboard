@@ -56,4 +56,10 @@ class Organisation extends Model
             ->saveSlugsTo('slug')
             ->doNotGenerateSlugsOnUpdate();
     }
+
+    public function subdomain()
+    {
+        $parts = parse_url(config('app.url'));
+        return $parts['scheme'] . '://' . $this->slug . '.' . $parts['host'];
+    }
 }

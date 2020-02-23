@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <form method="POST" action="{{ route('register') }}" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <form method="POST" action="{{ route('register') }}" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-xs mx-auto">
         @csrf
         <h1 class="mb-4 text-xl font-bold text-center">{{ __('Register') }}</h1>
         <div class="mb-4">

@@ -41,6 +41,5 @@ class DatabaseSeeder extends Seeder
 
         $gebetshausWil->users()->save($admin, ['type' => UserType::Administrator]);
         $gebetshausZuerich->users()->save($admin, ['type' => UserType::Administrator]);
-        $gebetshausBuelach->users()->save($admin, ['type' => UserType::Visitor]);
     }
 }

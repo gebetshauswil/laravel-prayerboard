@@ -31,6 +31,14 @@
                 @auth
                     <a class="text-sm lg:text-base tracking-wide uppercase font-semibold px-4 text-gray-600 hover:text-gray-900"
                        href="{{ route('dashboard') }}">Dashboard</a>
+                    <a class="text-sm lg:text-base tracking-wide uppercase font-semibold px-4 text-gray-600 hover:text-gray-900"
+                       href="{{ route('logout') }}"
+                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                          style="display: none;">
+                        @csrf
+                    </form>
                 @else
                     <a class="text-sm lg:text-base tracking-wide uppercase font-semibold px-4 text-gray-600 hover:text-gray-900"
                        href="{{ route('login') }}">Login</a>
@@ -47,7 +55,8 @@
         <aside class="w-1/4">
             <nav>
                 <ul>
-                    <li><a href="{{route('organisations.index')}}" class="block py-1 hover:text-blue-800">Organisations</a></li>
+                    <li><a href="{{route('organisations.index')}}"
+                           class="block py-1 hover:text-blue-800">Organisations</a></li>
                     <li><a href="{{route('rooms.index')}}" class="block py-1 hover:text-blue-800">Rooms</a></li>
                     <li><a href="{{route('bookings.index')}}" class="block py-1 hover:text-blue-800">Bookings</a></li>
                     <li><a href="{{route('users.index')}}" class="block py-1 hover:text-blue-800">Users</a></li>
@@ -58,10 +67,7 @@
             @yield('content')
         </main>
     </div>
-    <footer class="px-6 py-5 flex mt-auto">
-        <a class="text-sm lg:text-base tracking-wide uppercase font-semibold px-4 text-gray-600 hover:text-gray-900"
-           href="https://gebetshauswil.ch">&copy; {{date('Y')}} by gebetshaus wil</a>
-    </footer>
+    @include('layouts.partials.footer')
 </div>
 </body>
 </html>

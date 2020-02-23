@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <form method="POST" action="{{ route('password.update') }}" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <form method="POST" action="{{ route('password.update') }}" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-xs mx-auto">
         @csrf
         <h1 class="mb-4 text-xl font-bold text-center">{{ __('Reset Password') }}</h1>
         <input type="hidden" name="token" value="{{ $token }}">

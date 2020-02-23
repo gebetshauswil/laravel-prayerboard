@@ -72,4 +72,13 @@ class OrganisationTest extends TestCase
 
         $this->assertSame('slug', $organisation->getRouteKeyName());
     }
+
+    /** @test */
+    public function it_provides_its_subdomain()
+    {
+        $parts = parse_url(config('app.url'));
+        /** @var Organisation $organisation */
+        $organisation = factory(Organisation::class)->create(['name' => 'Dummy']);
+        $this->assertSame($parts['scheme'] . '://' . $organisation->slug . '.' . $parts['host'], $organisation->subdomain());
+    }
 }

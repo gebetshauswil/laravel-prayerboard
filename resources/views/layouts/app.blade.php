@@ -31,6 +31,14 @@
                 @auth
                     <a class="text-sm lg:text-base tracking-wide uppercase font-semibold px-4 text-gray-600 hover:text-gray-900"
                        href="{{ route('dashboard') }}">Dashboard</a>
+                    <a class="text-sm lg:text-base tracking-wide uppercase font-semibold px-4 text-gray-600 hover:text-gray-900"
+                       href="{{ route('logout') }}"
+                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                          style="display: none;">
+                        @csrf
+                    </form>
                 @else
                     <a class="text-sm lg:text-base tracking-wide uppercase font-semibold px-4 text-gray-600 hover:text-gray-900"
                        href="{{ route('login') }}">Login</a>
@@ -43,13 +51,10 @@
             @endif
         </div>
     </header>
-    <main class="w-full max-w-xs">
+    <main class="w-full my-auto">
         @yield('content')
     </main>
-    <footer class="px-6 py-5 flex">
-        <a class="text-sm lg:text-base tracking-wide uppercase font-semibold px-4 text-gray-600 hover:text-gray-900"
-           href="https://gebetshauswil.ch">&copy; {{date('Y')}} by gebetshaus wil</a>
-    </footer>
+    @include('layouts.partials.footer')
 </div>
 </body>
 </html>

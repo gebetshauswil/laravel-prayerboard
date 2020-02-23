@@ -12,8 +12,8 @@ use BenSampo\Enum\Enum;
  */
 final class UserType extends Enum
 {
-    const Administrator = 0;
-    const Editor = 1;
-    const Member = 2;
-    const Visitor = 3;
+    const Administrator = 10;
+    const Editor = 20;
+    const Member = 30;
+    const Visitor = 40;
 }
