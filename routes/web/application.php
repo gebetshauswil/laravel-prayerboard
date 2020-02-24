@@ -5,9 +5,9 @@ Route::domain($domain)->group(function () {
         return view('index');
     });
 
-    Auth::routes();
+    Auth::routes(['verify' => true]);
 
-    Route::group(['middleware' => ['auth'], 'prefix' => 'dashboard'], function () {
+    Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'dashboard'], function () {
         Route::get(null, 'DashboardController@index')->name('dashboard');
         Route::resource('organisations', 'OrganisationController');
         Route::resource('rooms', 'RoomController');
