@@ -11,6 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+$domain = parse_url(config('app.url'))['host'];
+
+Route::domain($domain)->group(function () {
+    Route::get('/', function () {
+        return view('index');
+    });
+
+    Auth::routes(['verify' => true]);
+
+    Route::group(['middleware' => ['auth', 'verified'], 'prefix' => 'dashboard'], function () {
+        Route::get(null, 'DashboardController@index')->name('dashboard');
+    });
 });
