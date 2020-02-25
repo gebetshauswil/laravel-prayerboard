@@ -227,7 +227,7 @@ class PasswordResetTest extends TestCase
     }
 
     /** @test */
-    public function SubmitPasswordReset()
+    public function submit_password_reset()
     {
         /** @var User $user */
         $user = factory(User::class)->create([
