@@ -3,10 +3,20 @@
 namespace Tests\Feature;
 
 use App\User;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Notification;
 use Str;
 use Tests\TestCase;
+
+class EmailVerificationNotification extends VerifyEmail
+{
+    public function verificationUrl($notifiable)
+    {
+        return parent::verificationUrl($notifiable);
+    }
+}
 
 class UserRegistrationTest extends TestCase
 {
@@ -226,13 +236,37 @@ class UserRegistrationTest extends TestCase
             ->assertSee(__('Before proceeding, please check your email for a verification link.'));
 
 
-        $this->assertDatabaseHas('users',[
+        $this->assertDatabaseHas('users', [
             'first_name' => $first_name,
             'last_name' => $last_name,
             'email' => $email,
             'email_verified_at' => null,
         ]);
 
-        $this->assertAuthenticatedAs(User::whereEmail($email)->first());
+        $user = User::whereEmail($email)->first();
+
+        $this->assertNull($user->email_verified_at);
+
+        Notification::assertSentTo($user, VerifyEmail::class);
+
+        $this->assertAuthenticatedAs($user);
+    }
+
+    /** @test */
+    public function verify_email_address()
+    {
+        $notification = new EmailVerificationNotification();
+
+        $user = factory(User::class)->create(['email_verified_at' => null]);
+        $this->assertNull($user->email_verified_at);
+
+        $this->actingAs($user)->get($notification->verificationUrl($user));
+        $this->assertNotNull($user->email_verified_at);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        Notification::fake();
     }
 }
