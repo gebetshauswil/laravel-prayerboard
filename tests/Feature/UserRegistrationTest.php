@@ -31,12 +31,12 @@ class UserRegistrationTest extends TestCase
     {
         $this
             ->get(route('register'))
-            ->assertSee('First Name')
-            ->assertSee('Last Name')
-            ->assertSee('E-Mail Address')
-            ->assertSee('Password')
-            ->assertSee('Confirm Password')
-            ->assertSee('Register')
+            ->assertSee(__('First Name'))
+            ->assertSee(__('Last Name'))
+            ->assertSee(__('E-Mail Address'))
+            ->assertSee(__('Password'))
+            ->assertSee(__('Confirm Password'))
+            ->assertSee(__('Register'))
             ->assertSuccessful();
     }
 
